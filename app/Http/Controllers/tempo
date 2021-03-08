@@ -1,0 +1,24 @@
+        ->where("decode(s.porte,'-',p.porte,s.porte)",'=','p.porte')
+        ->where("decode(s.ninios,1,1,0,p.ninios,coalesce(s.ninios,coalesce(p.ninios,3))))",'=',"decode(p.ninios,1,1,coalesce(p.ninios,3))")
+        ->where(' (sysdate - p.fechanac)/30','between',"case COALESCE(s.edad,'-')
+                                                        when '-' then 0
+                                                        when 'cachorro' then 0
+                                                        when 'joven' then 6
+                                                        when 'adulto' then 18
+                                                        when 'anciano' then 84  
+                                                    end
+                                                   and
+                                                   case COALESCE(s.edad,'-')
+                                                        when '-' then 1000
+                                                        when 'cachorro' then 5.99
+                                                        when 'joven' then 17.99
+                                                        when 'adulto' then 83.99
+                                                        when 'anciano' then 1000 
+                                                    end")
+
+        //->where("DECODE(s.actividad,'NO DETERMINADA',p.actividad,'MEDIA','M','BAJA','B','ALTA','A')", '=', 'p.actividad')  
+        //->where("DECODE(s.guardian,'-',p.guardian,s.guardian)", '=', "p.guardian")
+        //->where("DECODE(coalesce(s.sexo,'X'),'X',p.sexo,s.sexo)", '=','p.sexo')
+        //->where("DECODE(coalesce(s.depto,'X'),'X',p.depto,'N',p.depto,s.depto)", '=', 'p.depto')
+        //->where("DECODE(coalesce(s.otrosperros,'X'),'X',p.otrosperros,'N',p.otrosperros,'-',p.otrosperros,s.otrosperros)", '=', 'p.otrosperros')
+        //->where("DECODE(coalesce(s.gatos,'X'),'X',p.gatos,'N',p.gatos,'-',p.gatos,s.gatos)", '=', 'p.gatos')
